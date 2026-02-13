@@ -1,0 +1,104 @@
+.homepage-wrapper {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 30px;
+}
+
+.homepage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.homepage-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.header-text {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.homepage-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #006699;
+}
+
+.homepage-subtitle {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.logout-btn {
+  height: fit-content;
+}
+
+.homepage-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.homepage-description {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.homepage-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.homepage-btn {
+  min-width: 150px;
+}
+
+/* ✅ Weather button styling */
+.homepage-btn.btn-info {
+  background-color: #17a2b8;
+  border: none;
+  font-weight: 500;
+}
+
+.homepage-btn.btn-info:hover {
+  background-color: #138496;
+}
+
+.programs-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.programs-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.program-card {
+  flex: 1 1 250px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}

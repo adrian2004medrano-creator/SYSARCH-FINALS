@@ -1,0 +1,72 @@
+.register-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.register-form-container {
+  width: 100%;
+  max-width: 500px; /* slightly wider than login for more fields */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+  text-align: center;
+}
+
+.register-logo {
+  display: block;
+  margin: 0 auto 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.register-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.register-subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.register-form {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.register-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.already-account {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-link {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
