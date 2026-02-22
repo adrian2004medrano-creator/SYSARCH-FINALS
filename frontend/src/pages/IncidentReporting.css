@@ -1,0 +1,39 @@
+.incident-wrapper {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.incident-form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.incident-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1338BE;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.incident-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.incident-form {
+  margin-bottom: 15px;
+}
+
+.incident-button, .back-button {
+  margin-top: 15px;
+  margin-right: 10px;
+}

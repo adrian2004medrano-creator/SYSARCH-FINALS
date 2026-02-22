@@ -6,10 +6,9 @@ import './Register.css';
 import logo from '../assets/brgy-logo.jpg';
 
 function Register() {
-  const [step, setStep] = useState(1); // ✅ track which section is shown
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: '',
-    middleName: '',
     lastName: '',
     address: '',
     gender: '',
@@ -17,9 +16,9 @@ function Register() {
     civilStatus: '',
     religion: '',
     email: '',
-    cellphone: '',
-    username: '',
-    password: ''
+    password: '',
+    role: '',       // ✅ new field
+    position: ''    // ✅ only for admins
   });
 
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ function Register() {
 
   const handleNext = (e) => {
     e.preventDefault();
-    setStep(2); // ✅ go to Register II
+    setStep(2);
   };
 
   const handleSubmit = async (e) => {
@@ -45,10 +44,6 @@ function Register() {
     } catch (err) {
       alert(err.response?.data?.error || 'Registration failed');
     }
-  };
-
-  const handleLoginRedirect = () => {
-    navigate('/');
   };
 
   return (
@@ -63,169 +58,87 @@ function Register() {
             <>
               <h5 className="section-title">I. Personal Information</h5>
 
-              <Form.Group className="register-form" controlId="formFirstName">
+              <Form.Group className="register-form">
                 <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  placeholder="Enter first name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
+                <Form.Control type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formMiddleName">
-                <Form.Label>Middle Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="middleName"
-                  placeholder="Enter middle name"
-                  value={formData.middleName}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="register-form" controlId="formLastName">
+              <Form.Group className="register-form">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastName"
-                  placeholder="Enter last name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
+                <Form.Control type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formAddress">
+              <Form.Group className="register-form">
                 <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="address"
-                  placeholder="Enter address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
+                <Form.Control type="text" name="address" value={formData.address} onChange={handleChange} />
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formGender">
+              <Form.Group className="register-form">
                 <Form.Label>Gender</Form.Label>
-                <Form.Select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                >
+                <Form.Select name="gender" value={formData.gender} onChange={handleChange}>
                   <option value="">Select gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="Other">Other</option>
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formBirthdate">
+              <Form.Group className="register-form">
                 <Form.Label>Birthdate</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="birthdate"
-                  value={formData.birthdate}
-                  onChange={handleChange}
-                />
+                <Form.Control type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} />
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formCivilStatus">
+              <Form.Group className="register-form">
                 <Form.Label>Civil Status</Form.Label>
-                <Form.Select
-                  name="civilStatus"
-                  value={formData.civilStatus}
-                  onChange={handleChange}
-                >
+                <Form.Select name="civilStatus" value={formData.civilStatus} onChange={handleChange}>
                   <option value="">Select civil status</option>
                   <option value="Single">Single</option>
                   <option value="Married">Married</option>
-                  <option value="Widowed">Widowed</option>
-                  <option value="Separated">Separated</option>
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formReligion">
+              <Form.Group className="register-form">
                 <Form.Label>Religion</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="religion"
-                  placeholder="Enter religion"
-                  value={formData.religion}
-                  onChange={handleChange}
-                />
+                <Form.Control type="text" name="religion" value={formData.religion} onChange={handleChange} />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="register-button">
-                Next
-              </Button>
+              <Form.Group className="register-form">
+                <Form.Label>Role</Form.Label>
+                <Form.Select name="role" value={formData.role} onChange={handleChange}>
+                  <option value="">Select role</option>
+                  <option value="resident">Resident</option>
+                  <option value="admin">Admin</option>
+                </Form.Select>
+              </Form.Group>
+
+              {formData.role === "admin" && (
+                <Form.Group className="register-form">
+                  <Form.Label>Position</Form.Label>
+                  <Form.Control type="text" name="position" value={formData.position} onChange={handleChange} />
+                </Form.Group>
+              )}
+
+              <Button variant="primary" type="submit" className="register-button">Next</Button>
             </>
           )}
 
           {step === 2 && (
             <>
-              <h5 className="section-title">II. Contact Information</h5>
+              <h5 className="section-title">II. Account Information</h5>
 
-              <Form.Group className="register-form" controlId="formEmail">
+              <Form.Group className="register-form">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} />
               </Form.Group>
 
-              <Form.Group className="register-form" controlId="formCellphone">
-                <Form.Label>Cellphone Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="cellphone"
-                  placeholder="Enter cellphone number"
-                  value={formData.cellphone}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="register-form" controlId="formUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  placeholder="Choose a username"
-                  value={formData.username}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="register-form" controlId="formPassword">
+              <Form.Group className="register-form">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="register-button">
-                Submit
-              </Button>
+              <Button variant="primary" type="submit" className="register-button">Submit</Button>
             </>
           )}
         </Form>
-
-        <div className="already-account">
-          <p>
-            Already have an account?{' '}
-            <span className="login-link" onClick={handleLoginRedirect}>
-              Click here
-            </span>
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -1,55 +1,107 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Homepage.css";
 import logo from "../assets/brgy-logo.jpg";
 
 function Homepage() {
   const navigate = useNavigate();
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/announcements");
+        setAnnouncements(res.data);
+      } catch (err) {
+        console.error("Failed to fetch announcements", err);
+      }
+    };
+    fetchAnnouncements();
+  }, []);
 
   const handleLogout = () => {
     alert("You have been logged out.");
     navigate("/");
   };
 
-  const handleWeatherRedirect = () => {
-    navigate("/weather"); // ✅ redirect to WeatherPage
-  };
+  const handleWeatherRedirect = () => navigate("/weather");
+  const handleIncidentRedirect = () => navigate("/incident-reporting");
+  const handleFeedbackRedirect = () => navigate("/feedback");
 
   return (
-    <div className="homepage-wrapper">
-      <div className="homepage-header">
-        <img src={logo} alt="Barangay Logo" className="homepage-logo" />
-        <div className="header-text">
-          <h1 className="homepage-title">Barangay Information System</h1>
-          <h2 className="homepage-subtitle">Barangay 633 - Zone 64</h2>
+    <div className="homepage-page">
+      {/* Header */}
+      <header className="homepage-header">
+        <div className="header-left">
+          <img src={logo} alt="Barangay Logo" className="homepage-logo" />
+          <div>
+            <h2 className="homepage-title">Barangay 633 - Zone 64</h2>
+            <p className="homepage-subtitle">Barangay Management System</p>
+          </div>
         </div>
-        <Button variant="danger" className="logout-btn" onClick={handleLogout}>
-          Logout
-        </Button>
-      </div>
-
-      <div className="homepage-content">
-        <p className="homepage-description">
-          A centralized online platform designed to enhance barangay services for Barangay 633, Zone 64.
-          This web-based system provides residents essential features such as incident reporting, assistance requests, barangay information, and important announcements.
-        </p>
-
-        <div className="homepage-buttons">
-          <Button variant="primary" className="homepage-btn">Feedback</Button>
-          <Button variant="secondary" className="homepage-btn">Report Incident</Button>
-          <Button variant="info" className="homepage-btn" onClick={handleWeatherRedirect}>
-            Check Weather
+        <div className="header-right">
+          <div className="account-logo">
+            <div className="head"></div>
+            <div className="body"></div>
+          </div>
+          <Button className="logout-btn" onClick={handleLogout}>
+            Logout
           </Button>
         </div>
+      </header>
 
-        <h4 className="programs-title">Programs</h4>
-        <div className="programs-grid">
-          <div className="program-card">Community Health and Programs</div>
-          <div className="program-card">Youth Development Program</div>
-          <div className="program-card">Livelihood and Skills Training</div>
-        </div>
-      </div>
+      {/* Content */}
+      <main className="homepage-content">
+        {/* Description */}
+        <section className="homepage-description-section">
+          <p className="homepage-description">
+            Welcome to the Barangay Management System — a centralized online
+            platform designed to enhance services for Barangay 633, Zone 64.
+            Residents can access incident reporting, assistance requests,
+            barangay information, and important announcements.
+          </p>
+        </section>
+
+        {/* Quick Actions */}
+        <section className="homepage-actions">
+          <h4 className="section-title">Quick Actions</h4>
+          <div className="action-buttons">
+            <Button variant="primary" className="homepage-btn" onClick={handleFeedbackRedirect}>
+              Feedback
+            </Button>
+            <Button variant="primary" className="homepage-btn" onClick={handleIncidentRedirect}>
+              Report Incident
+            </Button>
+            <Button variant="primary" className="homepage-btn" onClick={handleWeatherRedirect}>
+              Check Weather
+            </Button>
+          </div>
+        </section>
+
+        {/* Announcements */}
+        <section className="homepage-announcements">
+          <h4 className="section-title">Announcements</h4>
+          {announcements.length === 0 ? (
+            <p>No announcements available.</p>
+          ) : (
+            <div className="announcement-list">
+              {announcements.map((a) => (
+                <Card key={a.id} className="announcement-card">
+                  <Card.Body>
+                    <Card.Title>{a.title}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      {new Date(a.date_posted).toLocaleString()}
+                    </Card.Subtitle>
+                    <Card.Text>{a.content}</Card.Text>
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
     </div>
   );
 }

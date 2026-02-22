@@ -1,0 +1,54 @@
+.feedback-management {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.feedback-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.feedback-list-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ✅ Star rating styles */
+.star {
+  color: #ccc;          /* default gray */
+  font-size: 1.3rem;    /* slightly larger for visibility */
+  margin: 0 2px;
+}
+
+.star.filled {
+  color: #f5c518;       /* gold for filled stars */
+}

@@ -6,19 +6,28 @@ import './Login.css';
 import logo from '../assets/brgy-logo.jpg';
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
       if (res.data.message === 'Login successful!') {
         alert('Login successful!');
-        // ✅ Redirect to homepage
-        navigate('/home');
+
+        // ✅ Save token and role for later use
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('role', res.data.role);
+
+        // ✅ Redirect based on role
+        if (res.data.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/home');
+        }
       } else {
         alert(res.data.error || 'Login failed');
       }
@@ -31,21 +40,25 @@ function Login() {
     navigate('/register');
   };
 
+  const handleForgotPasswordRedirect = () => {
+    navigate('/forgot-password');
+  };
+
   return (
     <div className="login-wrapper">
       <div className="login-form-container">
         <img src={logo} alt="Barangay Logo" className="login-logo" />
-        <h2 className="login-title">Barangay 633 - Zone 4</h2>
+        <h2 className="login-title">Barangay 633 - Zone 64</h2>
         <p className="login-subtitle">Barangay Management System</p>
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="login-form" controlId="formBasicUsername">
-            <Form.Label>Username</Form.Label>
+          <Form.Group className="login-form" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </Form.Group>
@@ -62,7 +75,9 @@ function Login() {
           </Form.Group>
 
           <div className="forgot-password">
-            <a href="/forgot-password">Forgot Password?</a>
+            <Button variant="link" className="forgot-link" onClick={handleForgotPasswordRedirect}>
+              Forgot Password?
+            </Button>
           </div>
 
           <Button variant="primary" type="submit" className="login-button">
@@ -70,7 +85,7 @@ function Login() {
           </Button>
 
           <Button
-            variant="secondary"
+            variant="primary"
             type="button"
             className="register-button"
             onClick={handleRegisterRedirect}

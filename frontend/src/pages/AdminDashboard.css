@@ -1,0 +1,78 @@
+.admin-dashboard {
+  padding: 20px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1338BE;
+}
+
+/* Statistics cards */
+.stat-card {
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.stat-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #006699;
+}
+
+.stat-card .card-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Management cards */
+.management-card {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.management-card .card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1338BE;
+}
+
+.management-card .card-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.management-card button {
+  font-weight: 600;
+}
+
+/* Card icons */
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.card-icon.warning {
+  color: #d9534f;
+}
+
+.card-icon.chat {
+  color: #5bc0de;
+}
+
+.card-icon.users {
+  color: #5cb85c;
+}
+
+.card-icon.pencil {
+  color: #f0ad4e;
+}
