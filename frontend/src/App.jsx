@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
@@ -6,13 +9,39 @@ import WeatherPage from "./pages/WeatherPage";
 import IncidentReporting from "./pages/IncidentReporting";
 import Feedback from "./pages/Feedback";
 import ForgotPassword from "./pages/ForgotPassword";
-import AdminDashboard from "./pages/AdminDashboard"; // ✅ Import AdminDashboard page
-import UserManagement from "./pages/UserManagement"; // ✅ Import UserManagement page
-import ComplaintManagement from "./pages/ComplaintManagement"; // ✅ Import ComplaintManagement page
-import FeedbackManagement from "./pages/FeedbackManagement"; // ✅ Import FeedbackManagement page
-import Announcements from "./pages/Announcements"; // ✅ Import Announcements page
+import AdminDashboard from "./pages/AdminDashboard"; 
+import UserManagement from "./pages/UserManagement"; 
+import ComplaintManagement from "./pages/ComplaintManagement"; 
+import FeedbackManagement from "./pages/FeedbackManagement"; 
+import Announcements from "./pages/Announcements"; 
 
 function App() {
+  const [faqs, setFaqs] = useState([]);
+  const [chatbotEntries, setChatbotEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/faqs");
+        setFaqs(res.data);
+      } catch (err) {
+        console.error("❌ Failed to fetch FAQs:", err.message);
+      }
+    };
+
+    const fetchChatbotEntries = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/chatbot");
+        setChatbotEntries(res.data);
+      } catch (err) {
+        console.error("❌ Failed to fetch chatbot entries:", err.message);
+      }
+    };
+
+    fetchFaqs();
+    fetchChatbotEntries();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -23,7 +52,7 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Homepage route (for residents) */}
-        <Route path="/home" element={<Homepage />} />
+        <Route path="/home" element={<Homepage faqs={faqs} chatbotEntries={chatbotEntries} />} />
 
         {/* Admin Dashboard route */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
