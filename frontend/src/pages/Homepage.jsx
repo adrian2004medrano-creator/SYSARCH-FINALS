@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, Card, Row, Col } from "react-bootstrap";
+import { Button, Card, Row, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Homepage.css";
-import logo from "../assets/brgy-logo.jpg";
+import Header from "./Header"; // ✅ Import the shared Header component
+
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+const LAT = 14.6;
+const LON = 121.0;
 
 function Homepage({ faqs, chatbotEntries }) {
   const navigate = useNavigate();
@@ -11,6 +15,12 @@ function Homepage({ faqs, chatbotEntries }) {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const messagesEndRef = useRef(null);
+
+  // Weather states
+  const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
+  const [loadingWeather, setLoadingWeather] = useState(true);
+  const [errorWeather, setErrorWeather] = useState(null);
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -31,16 +41,53 @@ function Homepage({ faqs, chatbotEntries }) {
     }
   }, [chatMessages]);
 
-  const handleLogout = () => {
-    alert("You have been logged out.");
-    navigate("/");
+  // ✅ Date/Time Formatter
+  const formatDateTime = (dateString) => {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+    return date.toLocaleString("en-US", options);
   };
 
-  const handleWeatherRedirect = () => navigate("/weather");
-  const handleIncidentRedirect = () => navigate("/incident-reporting");
-  const handleFeedbackRedirect = () => navigate("/feedback");
+  // Weather fetch
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        if (!API_KEY) throw new Error("Missing OpenWeatherMap API key.");
 
-  // When FAQ is clicked, chatbot answers with hotline info from DB
+        const resCurrent = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`
+        );
+        const resForecast = await fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`
+        );
+
+        const dataCurrent = await resCurrent.json();
+        const dataForecast = await resForecast.json();
+
+        if (dataCurrent.cod !== 200) throw new Error(dataCurrent.message);
+        if (!dataForecast.list) throw new Error("Forecast data unavailable");
+
+        setWeather(dataCurrent);
+        setForecast(dataForecast.list.slice(0, 3)); // show 3 upcoming forecasts
+      } catch (err) {
+        setErrorWeather(err.message);
+      } finally {
+        setLoadingWeather(false);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
+  // FAQ click handler
   const handleFaqClick = (faq) => {
     setChatMessages((prev) => [
       ...prev,
@@ -75,25 +122,8 @@ function Homepage({ faqs, chatbotEntries }) {
 
   return (
     <div className="homepage-page">
-      {/* Header */}
-      <header className="homepage-header">
-        <div className="header-left">
-          <img src={logo} alt="Barangay Logo" className="homepage-logo" />
-          <div>
-            <h2 className="homepage-title">Barangay 633 - Zone 64</h2>
-            <p className="homepage-subtitle">Barangay Management System</p>
-          </div>
-        </div>
-        <div className="header-right">
-          <div className="account-logo">
-            <div className="head"></div>
-            <div className="body"></div>
-          </div>
-          <Button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-      </header>
+      {/* ✅ Shared Header */}
+      <Header />
 
       {/* Content */}
       <main className="homepage-content">
@@ -103,7 +133,7 @@ function Homepage({ faqs, chatbotEntries }) {
             <Card className="description-card">
               <Card.Body>
                 <Card.Title className="description-title">
-                  Welcome to Barangay 633
+                  Welcome to Barangay 633 Zone 64 System
                 </Card.Title>
                 <Card.Text className="description-text">
                   The Barangay Management System is designed to provide
@@ -116,6 +146,10 @@ function Homepage({ faqs, chatbotEntries }) {
                     <li>Provide feedback to barangay officials</li>
                     <li>Stay updated with weather information</li>
                     <li>View important announcements</li>
+                    <li>
+                      Chat with assistant chatbot for emergency and government
+                      hotline numbers.
+                    </li>
                   </ul>
                   <br />
                 </Card.Text>
@@ -123,7 +157,7 @@ function Homepage({ faqs, chatbotEntries }) {
             </Card>
           </Col>
 
-          {/* Quick Actions + Announcements */}
+          {/* Quick Actions + Weather + Announcements */}
           <Col md={8} className="homepage-actions-col">
             <section className="homepage-actions">
               <h4 className="section-title">Quick Actions</h4>
@@ -136,7 +170,10 @@ function Homepage({ faqs, chatbotEntries }) {
                       <Card.Text>
                         Share your thoughts and suggestions with the barangay.
                       </Card.Text>
-                      <Button variant="primary" onClick={handleFeedbackRedirect}>
+                      <Button
+                        variant="primary"
+                        onClick={() => navigate("/feedback")}
+                      >
                         Go to Feedback
                       </Button>
                     </Card.Body>
@@ -149,30 +186,82 @@ function Homepage({ faqs, chatbotEntries }) {
                       <div className="card-icon">⚠️</div>
                       <Card.Title>Report Incident</Card.Title>
                       <Card.Text>
-                        Report incidents or complaints directly to barangay officials.
+                        Report incidents or complaints directly to barangay
+                        officials.
                       </Card.Text>
-                      <Button variant="primary" onClick={handleIncidentRedirect}>
+                      <Button
+                        variant="primary"
+                        onClick={() => navigate("/incident-reporting")}
+                      >
                         Go to Reports
                       </Button>
                     </Card.Body>
                   </Card>
                 </Col>
+              </Row>
+            </section>
 
-                <Col md={4}>
-                  <Card className="action-card">
+            {/* ✅ Weather Section */}
+            <section className="homepage-weather">
+              <h4 className="section-title">Weather Updates</h4>
+              {loadingWeather ? (
+                <Spinner animation="border" variant="primary" />
+              ) : errorWeather ? (
+                <p className="text-danger">Error: {errorWeather}</p>
+              ) : weather ? (
+                <>
+                  <Card className="weather-card mb-3">
                     <Card.Body>
-                      <div className="card-icon">☀️</div>
-                      <Card.Title>Check Weather</Card.Title>
+                      <Card.Title>Current Weather</Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {formatDateTime(new Date())}
+                      </Card.Subtitle>
+                      {weather.weather && weather.weather[0] && (
+                        <img
+                          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                          alt={weather.weather[0].description}
+                          className="weather-icon"
+                        />
+                      )}
                       <Card.Text>
-                        Stay updated with the latest weather information.
+                        {weather.weather[0].main} - {weather.weather[0].description}
+                        <br />
+                        Temperature: {Math.round(weather.main.temp)}°C
+                        <br />
+                        Humidity: {weather.main.humidity}% | Wind: {weather.wind.speed} m/s
                       </Card.Text>
-                      <Button variant="primary" onClick={handleWeatherRedirect}>
-                        View Weather
-                      </Button>
                     </Card.Body>
                   </Card>
-                </Col>
-              </Row>
+
+                  <Row>
+                    {forecast.map((item, index) => (
+                      <Col key={index} md={4}>
+                        <Card className="forecast-card">
+                          <Card.Body>
+                            <Card.Title>
+                              {formatDateTime(new Date(item.dt_txt))}
+                            </Card.Title>
+                            <img
+                              src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                              alt={item.weather[0].description}
+                              className="forecast-icon"
+                            />
+                            <Card.Text>
+                              {item.weather[0].main} - {item.weather[0].description}
+                              <br />
+                              Temp: {Math.round(item.main.temp)}°C
+                              <br />
+                              Humidity: {item.main.humidity}% | Wind: {item.wind.speed} m/s
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                </>
+              ) : (
+                <p>Unable to load weather data.</p>
+              )}
             </section>
 
             {/* Announcements */}
@@ -189,7 +278,7 @@ function Homepage({ faqs, chatbotEntries }) {
                           <div className="card-icon">📢</div>
                           <Card.Title>{a.title}</Card.Title>
                           <Card.Subtitle className="mb-2 text-muted">
-                            {new Date(a.date_posted).toLocaleString()}
+                            {formatDateTime(a.date_posted)} {/* ✅ formatted */}
                           </Card.Subtitle>
                           <Card.Text>{a.content}</Card.Text>
                         </Card.Body>
@@ -204,7 +293,10 @@ function Homepage({ faqs, chatbotEntries }) {
       </main>
 
       {/* Chatbot Floating Button */}
-      <div className="chatbot-button" onClick={() => setChatOpen(!chatOpen)}>
+      <div
+        className="chatbot-button"
+        onClick={() => setChatOpen(!chatOpen)}
+      >
         🤖
       </div>
 
@@ -223,7 +315,7 @@ function Homepage({ faqs, chatbotEntries }) {
 
           {/* FAQs */}
           <div className="chatbot-faqs">
-            <h6>Frequently Asked Questions</h6>
+            <h6>Need help?</h6>
             {faqs && faqs.length > 0 ? (
               faqs.map((faq) => (
                 <Button

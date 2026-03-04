@@ -5,10 +5,10 @@ import axios from "axios";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
-import WeatherPage from "./pages/WeatherPage";
 import IncidentReporting from "./pages/IncidentReporting";
 import Feedback from "./pages/Feedback";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";   // ✅ Import ResetPassword
 import AdminDashboard from "./pages/AdminDashboard"; 
 import UserManagement from "./pages/UserManagement"; 
 import ComplaintManagement from "./pages/ComplaintManagement"; 
@@ -69,9 +69,6 @@ function App() {
         {/* Announcements route (for admins) */}
         <Route path="/announcements" element={<Announcements />} />
 
-        {/* Weather page route */}
-        <Route path="/weather" element={<WeatherPage />} />
-
         {/* Incident Reporting page route */}
         <Route path="/incident-reporting" element={<IncidentReporting />} />
 
@@ -80,6 +77,9 @@ function App() {
 
         {/* Forgot Password page route */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* ✅ Reset Password page route */}
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

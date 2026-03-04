@@ -10,14 +10,19 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-// ✅ Resident submits feedback
+// ✅ Resident submits feedback (must be tied to a valid user_id)
 router.post("/submit", async (req, res) => {
-  const { user_id, name, email, rating, message } = req.body;
+  const { user_id, rating, message } = req.body;
+
+  // Validate required fields
+  if (!user_id || !rating || !message) {
+    return res.status(400).json({ error: "user_id, rating, and message are required." });
+  }
 
   try {
     await pool.query(
-      `INSERT INTO feedback (user_id, name, email, rating, message) VALUES (?, ?, ?, ?, ?)`,
-      [user_id || null, name, email, rating, message]
+      `INSERT INTO feedback (user_id, rating, message) VALUES (?, ?, ?)`,
+      [user_id, rating, message]
     );
     res.json({ message: "Feedback submitted successfully!" });
   } catch (err) {
@@ -26,10 +31,22 @@ router.post("/submit", async (req, res) => {
   }
 });
 
-// ✅ Admin fetches all feedback
+// ✅ Admin fetches all feedback with user details (always from users table)
 router.get("/", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM feedback ORDER BY date_submitted DESC");
+    const [rows] = await pool.query(`
+      SELECT 
+        f.id, 
+        f.user_id, 
+        CONCAT(u.first_name, ' ', u.last_name) AS name, 
+        u.email, 
+        f.rating, 
+        f.message, 
+        f.date_submitted
+      FROM feedback f
+      INNER JOIN users u ON f.user_id = u.id
+      ORDER BY f.date_submitted DESC
+    `);
     res.json(rows);
   } catch (err) {
     console.error("Fetch feedback error:", err);

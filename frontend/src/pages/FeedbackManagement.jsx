@@ -18,6 +18,7 @@ function FeedbackManagement() {
   const fetchFeedbacks = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/feedback");
+      console.log("Feedback API response:", res.data); // 👀 Debugging
       setFeedbacks(res.data);
     } catch (err) {
       console.error("Failed to fetch feedback", err);
@@ -37,14 +38,35 @@ function FeedbackManagement() {
     }
   };
 
-  // ✅ Filter logic
-  const filteredFeedbacks = feedbacks.filter((fb) =>
-    searchTerm
-      ? fb.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        fb.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        fb.email.toLowerCase().includes(searchTerm.toLowerCase())
-      : true
-  );
+  // ✅ Date/Time Formatter
+  const formatDateTime = (dateString) => {
+    if (!dateString) return "-"; // handle empty values
+    const date = new Date(dateString);
+
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    return date.toLocaleString("en-US", options);
+  };
+
+  // ✅ Filter logic with safe fallbacks
+  const filteredFeedbacks = feedbacks.filter((fb) => {
+    const name = fb.name || "";
+    const email = fb.email || "";
+    const message = fb.message || "";
+
+    return searchTerm
+      ? message.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          email.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+  });
 
   // ✅ Helper: render stars
   const renderStars = (rating) => {
@@ -86,11 +108,11 @@ function FeedbackManagement() {
           <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th>ID</th>
+                {/* Removed ID column */}
                 <th>Date Submitted</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Rating</th> {/* ✅ New column */}
+                <th>Rating</th>
                 <th>Message</th>
                 <th>Actions</th>
               </tr>
@@ -98,18 +120,18 @@ function FeedbackManagement() {
             <tbody>
               {filteredFeedbacks.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="text-center">
+                  <td colSpan="6" className="text-center">
                     No feedback found
                   </td>
                 </tr>
               ) : (
                 filteredFeedbacks.map((fb) => (
                   <tr key={fb.id}>
-                    <td>{fb.id}</td>
-                    <td>{fb.date_submitted}</td>
-                    <td>{fb.name}</td>
-                    <td>{fb.email}</td>
-                    <td>{renderStars(fb.rating)}</td> {/* ✅ Show stars */}
+                    {/* Removed ID cell */}
+                    <td>{formatDateTime(fb.date_submitted)}</td>
+                    <td>{fb.name}</td>   {/* ✅ Always show name from users table */}
+                    <td>{fb.email}</td>  {/* ✅ Always show email from users table */}
+                    <td>{renderStars(fb.rating)}</td>
                     <td>{fb.message}</td>
                     <td>
                       <Button

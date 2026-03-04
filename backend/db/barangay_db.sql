@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2026 at 06:57 AM
+-- Generation Time: Mar 04, 2026 at 10:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,13 +32,6 @@ CREATE TABLE `admins` (
   `user_id` int(11) NOT NULL,
   `position` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `admins`
---
-
-INSERT INTO `admins` (`admin_id`, `user_id`, `position`) VALUES
-(2, 8, 'SK Kagawad');
 
 -- --------------------------------------------------------
 
@@ -127,9 +120,7 @@ INSERT INTO `faqs` (`id`, `question`, `answer`, `created_at`) VALUES
 
 CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
   `message` text NOT NULL,
   `date_submitted` timestamp NOT NULL DEFAULT current_timestamp()
@@ -158,25 +149,15 @@ CREATE TABLE `incidents` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `residents`
+-- Table structure for table `password_resets`
 --
 
-CREATE TABLE `residents` (
-  `resident_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `birthdate` date DEFAULT NULL,
-  `civil_status` varchar(20) DEFAULT NULL,
-  `religion` varchar(50) DEFAULT NULL
+CREATE TABLE `password_resets` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `reset_code` varchar(10) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `residents`
---
-
-INSERT INTO `residents` (`resident_id`, `user_id`, `address`, `gender`, `birthdate`, `civil_status`, `religion`) VALUES
-(3, 10, 'Manila', 'Male', '2004-06-10', 'Single', 'Roman Catholic');
 
 -- --------------------------------------------------------
 
@@ -191,16 +172,36 @@ CREATE TABLE `users` (
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','resident') DEFAULT 'resident',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `religion` varchar(100) DEFAULT NULL,
+  `civil_status` varchar(50) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `position` varchar(255) NOT NULL DEFAULT 'Barangay Resident',
+  `phone` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Triggers `users`
 --
-
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`) VALUES
-(8, 'Ralph', 'Galve', 'ralphgalve@gmail.com', '$2b$10$.2F3or5s9W/0fBzz/lhfEe6OgFV92qROLSZVdkMsdY2RKlekjkNUy', 'admin', '2026-02-21 17:35:12'),
-(10, 'Adrian', 'Medrano', 'adrian2004medrano@gmail.com', '$2b$10$lpU1sATwB6X78VOSHeFBl..Bzoq3Z22UP8yXICJKZ75MprZIOwB.q', 'resident', '2026-02-22 02:13:23');
+DELIMITER $$
+CREATE TRIGGER `set_resident_position` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+  IF NEW.role = 'resident' THEN
+    SET NEW.position = 'Barangay Resident';
+  END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_resident_position` BEFORE UPDATE ON `users` FOR EACH ROW BEGIN
+  IF NEW.role = 'resident' THEN
+    SET NEW.position = 'Barangay Resident';
+  END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -237,7 +238,7 @@ ALTER TABLE `faqs`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_feedback_user` (`user_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `incidents`
@@ -247,11 +248,10 @@ ALTER TABLE `incidents`
   ADD KEY `fk_incident_user` (`user_id`);
 
 --
--- Indexes for table `residents`
+-- Indexes for table `password_resets`
 --
-ALTER TABLE `residents`
-  ADD PRIMARY KEY (`resident_id`),
-  ADD KEY `user_id` (`user_id`);
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -268,13 +268,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `chatbot_entries`
@@ -292,25 +292,25 @@ ALTER TABLE `faqs`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `incidents`
 --
 ALTER TABLE `incidents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `residents`
+-- AUTO_INCREMENT for table `password_resets`
 --
-ALTER TABLE `residents`
-  MODIFY `resident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `password_resets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Constraints for dumped tables
@@ -332,19 +332,13 @@ ALTER TABLE `announcements`
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD CONSTRAINT `fk_feedback_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `incidents`
 --
 ALTER TABLE `incidents`
   ADD CONSTRAINT `fk_incident_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `residents`
---
-ALTER TABLE `residents`
-  ADD CONSTRAINT `residents_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

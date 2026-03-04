@@ -18,9 +18,14 @@ function Login() {
       if (res.data.message === 'Login successful!') {
         alert('Login successful!');
 
-        // ✅ Save token and role for later use
+        // ✅ Save token, role, and user details for later use
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('role', res.data.role);
+
+        // 👇 Save user info so Feedback.jsx can use it
+        localStorage.setItem('userId', res.data.user.id); 
+        localStorage.setItem('name', `${res.data.user.first_name} ${res.data.user.last_name}`);
+        localStorage.setItem('email', res.data.user.email);
 
         // ✅ Redirect based on role
         if (res.data.role === 'admin') {

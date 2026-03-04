@@ -9,7 +9,7 @@
 
 .register-form-container {
   width: 100%;
-  max-width: 500px; /* slightly wider than login for more fields */
+  max-width: 500px;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -52,6 +52,20 @@
 .register-button {
   width: 100%;
   margin-top: 10px;
+}
+
+/* 🔑 Stack buttons vertically: Next/Submit on top, Back below */
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button-stack .btn {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
 }
 
 .already-account {

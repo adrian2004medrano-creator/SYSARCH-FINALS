@@ -13,7 +13,8 @@ function Body({ children }) {
         {children}
       </main>
 
-      {/* Footer removed until you create it */}
+      {/* Footer placeholder (optional) */}
+      {/* <footer className="app-footer">Footer content here</footer> */}
     </div>
   );
 }

@@ -14,12 +14,24 @@ function Feedback() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // ✅ Validation: Require star rating
+    if (rating === 0) {
+      alert("Please select a star rating before submitting.");
+      return;
+    }
+
+    // ✅ Get logged-in user ID from localStorage
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("You must be logged in to submit feedback.");
+      return;
+    }
+
     try {
       // ✅ Send feedback to backend
       await axios.post("http://localhost:5000/api/feedback/submit", {
-        user_id: localStorage.getItem("userId") || null, // optional if logged in
-        name: localStorage.getItem("name") || "Anonymous",
-        email: localStorage.getItem("email") || "anonymous@example.com",
+        user_id: userId,   // 👈 required by backend
         rating,
         message: comments,
       });
@@ -61,6 +73,7 @@ function Feedback() {
                       onClick={() => setRating(ratingValue)}
                       onMouseEnter={() => setHover(ratingValue)}
                       onMouseLeave={() => setHover(rating)}
+                      style={{ cursor: "pointer", fontSize: "24px" }}
                     >
                       ★
                     </span>

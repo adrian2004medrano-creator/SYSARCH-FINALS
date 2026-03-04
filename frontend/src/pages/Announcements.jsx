@@ -99,7 +99,7 @@ function Announcements() {
         <Table striped bordered hover responsive className="mt-4">
           <thead>
             <tr>
-              <th>ID</th>
+              {/* Removed ID column */}
               <th>Title</th>
               <th>Content</th>
               <th>Date Posted</th>
@@ -109,14 +109,14 @@ function Announcements() {
           <tbody>
             {announcements.length === 0 ? (
               <tr>
-                <td colSpan="5" className="text-center">
+                <td colSpan="4" className="text-center">
                   No announcements yet
                 </td>
               </tr>
             ) : (
               announcements.map((a) => (
                 <tr key={a.id}>
-                  <td>{a.id}</td>
+                  {/* Removed ID cell */}
                   <td>{a.title}</td>
                   <td>{a.content}</td>
                   <td>{a.date_posted}</td>

@@ -3,17 +3,15 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2";
 
-// Load .env FIRST before anything else
+// Load .env FIRST
 dotenv.config();
 
 // Debug: confirm env values are loaded
-console.log(
-  "Loaded ENV:",
-  process.env.DB_HOST,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  process.env.DB_NAME
-);
+console.log("Loaded ENV:", {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME
+});
 
 import authRoutes from "./routes/auth.js";
 import usersRoutes from "./routes/users.js";
@@ -47,13 +45,13 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Register routes
-app.use("/api/auth", authRoutes);
-app.use("/api/users", usersRoutes);
+app.use("/api/auth", authRoutes);       // Register/Login/Password Reset
+app.use("/api/users", usersRoutes);     // User Management
 app.use("/api/incidents", incidentsRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/announcements", announcementsRoutes);
 
-// ✅ FAQ route (basic: question + answer)
+// ✅ FAQ route
 app.get("/api/faqs", (req, res) => {
   db.query("SELECT id, question, answer FROM faqs", (err, results) => {
     if (err) {
@@ -64,7 +62,7 @@ app.get("/api/faqs", (req, res) => {
   });
 });
 
-// ✅ Chatbot entries route (departments + hotlines)
+// ✅ Chatbot entries route
 app.get("/api/chatbot", (req, res) => {
   db.query(
     "SELECT id, category, title, head, designation, contact FROM chatbot_entries",
@@ -79,8 +77,6 @@ app.get("/api/chatbot", (req, res) => {
 });
 
 // ✅ FAQs joined with hotline numbers
-// This lets the frontend show only the FAQ question/answer (location),
-// and when clicked, reply with the hotline number from chatbot_entries.
 app.get("/api/faqs-with-hotlines", (req, res) => {
   const sql = `
     SELECT f.id, f.question, f.answer, c.contact

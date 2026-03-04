@@ -53,6 +53,23 @@ function ComplaintManagement() {
     }
   };
 
+  // ✅ Date/Time Formatter
+  const formatDateTime = (dateString) => {
+    if (!dateString) return "-"; // handle empty values
+    const date = new Date(dateString);
+
+    const options = {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    return date.toLocaleString("en-US", options);
+  };
+
   // ✅ Filter logic
   const filteredIncidents = incidents.filter((incident) => {
     const matchesStatus = filterStatus ? incident.status === filterStatus : true;
@@ -128,12 +145,11 @@ function ComplaintManagement() {
           <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th>ID</th>
+                {/* Removed ID column */}
                 <th>Date/Time</th>
                 <th>Type</th>
                 <th>Location</th>
                 <th>Complainant</th>
-                <th>Respondent</th>
                 <th>Details</th> {/* ✅ New column */}
                 <th>Status</th>
                 <th>Actions</th>
@@ -142,19 +158,18 @@ function ComplaintManagement() {
             <tbody>
               {filteredIncidents.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="text-center">
+                  <td colSpan="7" className="text-center">
                     No incident found
                   </td>
                 </tr>
               ) : (
                 filteredIncidents.map((incident) => (
                   <tr key={incident.id}>
-                    <td>{incident.id}</td>
-                    <td>{incident.date_time}</td>
+                    {/* Removed ID cell */}
+                    <td>{formatDateTime(incident.date_time)}</td> {/* ✅ formatted */}
                     <td>{incident.type}</td>
                     <td>{incident.location}</td>
                     <td>{incident.complainant}</td>
-                    <td>{incident.respondent || "-"}</td>
                     <td>{incident.details}</td> {/* ✅ Show complaint details */}
                     <td>
                       <Form.Select

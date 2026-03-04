@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./ForgotPassword.css"; // optional styling
+import "./ForgotPassword.css";
 import logo from "../assets/brgy-logo.jpg";
 
 function ForgotPassword() {
@@ -12,13 +12,15 @@ function ForgotPassword() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Call your backend forgot-password endpoint
-      const res = await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      // ✅ Call your backend /send-reset-code endpoint
+      const res = await axios.post("http://localhost:5000/api/auth/send-reset-code", { email });
 
-      alert(res.data.message || "Password reset link sent to your email.");
-      navigate("/"); // ✅ after request, go back to login page
+      alert(res.data.message || "Reset code sent to your email.");
+
+      // ✅ Redirect user to ResetPassword.jsx and pass email along
+      navigate("/reset-password", { state: { email } });
     } catch (err) {
-      alert(err.response?.data?.error || "Failed to send reset link");
+      alert(err.response?.data?.error || "Failed to send reset code");
     }
   };
 
@@ -42,7 +44,7 @@ function ForgotPassword() {
           </Form.Group>
 
           <Button variant="primary" type="submit" className="forgot-button">
-            Send Reset Link
+            Send Reset Code
           </Button>
 
           <Button
