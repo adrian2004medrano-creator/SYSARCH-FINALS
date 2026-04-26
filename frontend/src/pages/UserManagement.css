@@ -1,0 +1,101 @@
+/* Wrapper */
+.user-management {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Header */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.user-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Statistics Section */
+.stats-section {
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.stat-card .card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.stat-card .card-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* User List Section */
+.user-list-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.list-header h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.list-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.search-bar {
+  width: 250px;
+}
+
+/* Table Styling */
+.table {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+}
+
+.table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table button {
+  margin: 0 3px;
+}
+
+/* Buttons */
+button.login-button,
+button.register-button,
+button.forgot-link {
+  font-size: 0.9rem;
+}

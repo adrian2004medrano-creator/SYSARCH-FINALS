@@ -1,0 +1,273 @@
+/* IncidentAndComplaintTab.css - PUBLIC VIEW */
+
+/* ✅ Full screen wrapper */
+.incident-complaint-tab {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ✅ All content below the header */
+.page-content {
+  flex: 1;
+  padding: 25px 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ BACK BUTTON - upper right, smaller size */
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;       /* 🔹 Closer to header */
+  margin-bottom: 10px;   /* 🔹 Less spacing below */
+}
+
+.back-button {
+  border-radius: 5px !important;
+  padding: 4px 10px !important;   /* 🔹 Compact padding */
+  font-weight: 500 !important;
+  font-size: 12px !important;     /* 🔹 Smaller text */
+  border: none !important;
+  color: white !important;
+  background-color: #6c757d !important;
+  transition: background-color 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.back-button:hover {
+  background-color: #5a6268 !important;
+  color: white !important;
+}
+
+/* ✅ TAB HEADER */
+.tab-header {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  margin-bottom: 25px;
+  border-left: 5px solid #007bff;
+}
+
+.tab-header h2 {
+  margin: 0 0 6px 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.tab-subtitle {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* ✅ TABLE SECTION */
+.incident-list-section {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+}
+
+.table-header {
+  padding: 25px 30px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+/* Table Container */
+.table-container {
+  overflow-x: auto;
+}
+
+.status-table {
+  margin: 0 !important;
+  font-size: 14px;
+}
+
+.status-table thead th {
+  background: linear-gradient(135deg, #007bff, #0056b3) !important;
+  color: white !important;
+  border: none !important;
+  padding: 20px 15px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  font-size: 11px !important;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.status-table tbody td {
+  padding: 18px 15px !important;
+  vertical-align: middle;
+  border-color: #e9ecef !important;
+  font-size: 14px;
+}
+
+.status-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.status-table tbody tr:hover {
+  background-color: #f0f8ff !important;
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0,123,255,0.1);
+}
+
+.status-table tbody tr:nth-child(even) {
+  background-color: #fafbfc !important;
+}
+
+/* Column Styles */
+.date-time {
+  font-weight: 600;
+  color: #2c3e50;
+  white-space: nowrap;
+  width: 140px;
+}
+
+.type {
+  font-weight: 500;
+  color: #495057;
+  text-transform: capitalize;
+}
+
+.details .detail-text {
+  max-height: 60px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.location, .complainant {
+  font-weight: 500;
+}
+
+.contact {
+  font-weight: 500;
+  color: #28a745;
+}
+
+/* Badges */
+.risk-box, .status-badge {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.risk-high {
+  background: linear-gradient(135deg, #dc3545, #c82333) !important;
+  color: white !important;
+}
+
+.risk-medium {
+  background: linear-gradient(135deg, #fd7e14, #e86a0d) !important;
+  color: white !important;
+}
+
+.risk-neutral {
+  background: linear-gradient(135deg, #ffc107, #e0a800) !important;
+  color: #212529 !important;
+}
+
+.risk-minor {
+  background: linear-gradient(135deg, #28a745, #218838) !important;
+  color: white !important;
+}
+
+.status-badge {
+  font-size: 12px !important;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Empty State */
+.empty-table {
+  background: #f8f9fa !important;
+  border: none !important;
+}
+
+.empty-state-content {
+  text-align: center;
+  padding: 60px 20px !important;
+  color: #6c757d;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state-content h5 {
+  color: #495057;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 992px) {
+  .page-content {
+    padding: 20px 15px;
+  }
+
+  .tab-header {
+    padding: 20px;
+  }
+
+  .tab-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 15px 10px;
+  }
+
+  .tab-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .status-table thead th,
+  .status-table tbody td {
+    padding: 12px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .back-button {
+    padding: 3px 8px !important;   /* 🔹 Even smaller on mobile */
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-content {
+    padding: 12px 8px;
+  }
+
+  .table-header {
+    padding: 20px 15px;
+  }
+}

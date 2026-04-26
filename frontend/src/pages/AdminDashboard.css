@@ -1,0 +1,333 @@
+.superadmin-dashboard {
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #2c3e50;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+/* Statistics cards */
+.stat-card {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  background: white;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-card.clickable:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+.stat-card.clickable:hover .stat-icon {
+  transform: scale(1.1);
+}
+
+.stat-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.stat-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .card-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Chart cards */
+.chart-card {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  background: white;
+  margin-bottom: 1.5rem;
+  height: 100%;
+}
+
+.chart-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.chart-card .card-body {
+  padding: 2rem;
+}
+
+/* Management cards */
+.management-card {
+  margin-bottom: 1.5rem;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  background: white;
+  transition: all 0.3s ease;
+  height: 100%;
+  overflow: hidden;
+}
+
+.management-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.management-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+  z-index: 1;
+}
+
+.management-card .card-body {
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.management-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+}
+
+.management-card .card-text {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.management-card button {
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+/* Card icons */
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.management-card:hover .card-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.card-icon.admin {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+
+.card-icon.warning {
+  color: #f39c12;
+  background: rgba(243, 156, 18, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+
+.card-icon.chat {
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+
+.card-icon.users {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+
+.card-icon.pencil {
+  color: #f1c40f;
+  background: rgba(241, 196, 15, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+}
+
+/* Stat card specific icons */
+.stat-icon {
+  font-size: 3.5rem !important;
+}
+
+/* Loading screen */
+.loading-screen,
+.d-flex.justify-content-center.align-items-center.min-vh-100 > div {
+  min-height: 60vh;
+}
+
+.loading-screen .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .superadmin-dashboard {
+    padding: 1rem 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .stat-card {
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+  }
+  
+  .stat-card .card-text {
+    font-size: 2rem;
+  }
+  
+  .chart-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .management-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .card-icon,
+  .stat-icon {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-card .card-text {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+}
+
+/* Button hover effects */
+.management-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #5a67d8 0%, #6b46c1 100%);
+}

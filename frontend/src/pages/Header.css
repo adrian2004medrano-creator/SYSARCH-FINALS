@@ -1,0 +1,123 @@
+/* Header Layout */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004085; /* dark blue */
+  color: #fff;
+  padding: 15px 30px;
+  position: relative; /* allow popup positioning */
+}
+
+/* Left side: logo + title */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.header-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #d6d6d6;
+}
+
+/* Right side: account icon + logout */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Improved account logo */
+.account-logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.account-logo .head {
+  width: 14px;
+  height: 14px;
+  background-color: #004085;
+  border-radius: 50%;
+}
+
+.account-logo .body {
+  width: 20px;
+  height: 12px;
+  background-color: #004085;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #dc3545; /* red like homepage */
+  border: none;
+  font-weight: bold;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.logout-btn:hover {
+  background-color: #b52a37;
+  color: #fff;
+}
+
+/* Profile popup */
+.profile-popup {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  width: 250px;
+  max-height: 200px;       /* limit height */
+  overflow-y: auto;        /* scroll if content exceeds height */
+  word-wrap: break-word;   /* wrap long words */
+  overflow-wrap: break-word;
+  background: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.profile-popup h5 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #004085;
+}
+
+.profile-popup p {
+  margin: 5px 0;
+  white-space: normal; /* ensure text wraps */
+}

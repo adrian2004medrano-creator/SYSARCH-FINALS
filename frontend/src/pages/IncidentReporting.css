@@ -1,0 +1,126 @@
+/* Page Layout */
+.incident-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.incident-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/* Form Card */
+.incident-form-container {
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.form-heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #006699;
+}
+
+.form-subtitle {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Form Fields */
+.incident-form {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.incident-form label {
+  font-weight: 500;
+  color: #444;
+}
+
+.incident-form input,
+.incident-form textarea,
+.incident-form select {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.incident-form input:focus,
+.incident-form textarea:focus,
+.incident-form select:focus {
+  border-color: #006699;
+  box-shadow: 0 0 5px rgba(0,102,153,0.3);
+}
+
+/* Risk Indicator */
+.risk-indicator-box {
+  margin: 20px 0;
+}
+
+.risk-box {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #000;
+}
+
+.risk-high {
+  background-color: #dc3545; /* red */
+}
+
+.risk-medium {
+  background-color: #ffc107; /* yellow */
+}
+
+.risk-minor {
+  background-color: #28a745; /* green */
+}
+
+.risk-neutral {
+  background-color: #fd7e14; /* orange */
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.incident-button,
+.back-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.incident-button:hover,
+.back-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Alerts */
+.alert {
+  margin-bottom: 15px;
+  border-radius: 6px;
+  text-align: left;
+}

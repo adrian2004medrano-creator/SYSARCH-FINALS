@@ -1,0 +1,55 @@
+/* Wrapper */
+.createadmin-wrapper {
+  min-height: 100vh;
+  background: #f8f9fa; /* light gray background */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Box-style form container */
+.createadmin-form-container {
+  max-width: 600px;
+  margin: 40px auto; /* centers the box */
+  background: #fff; /* white card */
+  padding: 30px;
+  border-radius: 8px; /* rounded corners */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow */
+}
+
+/* Title and subtitle */
+.createadmin-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1338BE; /* same blue accent */
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.createadmin-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form groups */
+.createadmin-form {
+  margin-bottom: 15px;
+}
+
+/* Inputs */
+.createadmin-form input,
+.createadmin-form select {
+  border-radius: 6px;
+  padding: 10px;
+}
+
+/* Buttons inside the box */
+.createadmin-button,
+.back-dashboard-button {
+  margin-top: 15px;
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+}
